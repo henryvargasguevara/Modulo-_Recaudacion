@@ -53,7 +53,7 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 	public PersonaDAOImpl() {
 		emf=Persistence.createEntityManagerFactory("PersonalPU");
 		em=emf.createEntityManager();
-		lstPersonas=new ArrayList<>();
+		lstPersonas=new ArrayList<Persona>();
 		cont=0;
 		
 	}
@@ -121,7 +121,7 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 
 	public List<Persona> listar() throws Exception 
 	{
-		List<Persona> lista=new ArrayList<>();
+		List<Persona> lista=new ArrayList<Persona>();
 		Query q=em.createQuery("FROM Persona p order by fecha asc");
 		lista=(List<Persona>) q.getResultList();
 		return lista;
@@ -129,16 +129,16 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 	
 	public void mostrarExcel(String urll) throws IOException, EncryptedDocumentException, InvalidFormatException {
 		Date fechaSeleccionada;
-		//paso 0. Definir una colecciÛn con nombres de las columnas a procesar
-		//considera que esto lo puedes leer de un archivo de configuraciÛn,
+		//paso 0. Definir una colecci√≥n con nombres de las columnas a procesar
+		//considera que esto lo puedes leer de un archivo de configuraci√≥n,
 		//input de usuario o cualquier otra fuente
 		List<String> columnas = Arrays.asList("MONEDA","DEPENDENCIA","CONCEP","NUMERO","CODIGO","NOMBRE","IMPORTE","FECHA");
 		//paso 1.
 		Map<String,Integer> mapNombresColumnas = new TreeMap<String,Integer>();
 		//paso 2.
-		//n˙mero de fila donde est·n los nombres de celda
-		//recuerda que POI est· basado con Ìndice 0
-		//si tus nombres est·n en la fila 1, entonces deberÌas iniciar esta
+		//n√∫mero de fila donde est√°n los nombres de celda
+		//recuerda que POI est√° basado con √≠ndice 0
+		//si tus nombres est√°n en la fila 1, entonces deber√≠as iniciar esta
 		//variable con 0.
 		final int filaNombresColumnas =0;
 		//url representa el nombre del archivo excel a subir
@@ -175,17 +175,17 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 		});
 		//paso 4.
 		//se asume que los valores para procesar se encuentran en la fila
-		//siguiente a la fila donde est·n los nombres de las columnas
+		//siguiente a la fila donde est√°n los nombres de las columnas
 		int indiceDatos = filaNombresColumnas + 1;
 		Row filaDatos = null;
-		List<Persona> lstPersonas1=new ArrayList<>();
+		List<Persona> lstPersonas1=new ArrayList<Persona>();
 		//recorrer todas las filas con datos
 		while ((filaDatos = ((org.apache.poi.ss.usermodel.Sheet) sheet).getRow(indiceDatos++)) != null) {
 		    //se procesan solo las celdas en base a los "nombres" de esas columnas
 		       //el resultado de mapNombresColumnas.get(col) es
-		       //el n˙mero de columna a leer
+		       //el n√∫mero de columna a leer
 		       //en este caso, solo se imprime el resultado
-		       //puedes reemplazar esto por la manera en que debas procesar la informaciÛn
+		       //puedes reemplazar esto por la manera en que debas procesar la informaci√≥n
 			 
 			   Persona pers=new Persona();
 			   LocalDate ff;
@@ -278,7 +278,7 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 	
 	@Override
 	public Persona ListarPorId(Persona t) throws Exception {
-		List<Persona> lista=new ArrayList<>();
+		List<Persona> lista=new ArrayList<Persona>();
 		Query q=em.createQuery("FROM Persona p where p.id = ?");
 		q.setParameter(1,t.getId());
 		lista=(List<Persona>) q.getResultList();
@@ -293,13 +293,13 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 	public List<Persona> listarxPersona(Persona t,LocalDate inicio,LocalDate fin) throws Exception 
 	 { /* There are two approaches to parameter binding: using positional or using
 		named parameters. Hibernate and Java Persistence support both options, but you
-		canít use both at the same time for a particular query.
+		can¬ít use both at the same time for a particular query.
 		With named parameters, you can rewrite the query as
 		String queryString =
 		"from Item item where item.description like :search";
 		*/
 		
-		List<Persona> lista =new ArrayList<>();
+		List<Persona> lista =new ArrayList<Persona>();
 		Query q=em.createQuery("From Persona p where (p.nombre LIKE  :code) AND ( p.nombre LIKE :code1)"
 				+ " AND (p.fecha BETWEEN :startDate AND :endDate)");
 		//Query q=em.createQuery("From Persona p where p.id = 363 ");
