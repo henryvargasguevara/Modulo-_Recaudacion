@@ -36,7 +36,7 @@ import com.peruviansy.service.Impl.PersonaServiceImpl;
 @ViewScoped
 public class PersonaBean implements Serializable{
 	
-	private List<Persona> lstPersonas=new ArrayList<>();
+	private List<Persona> lstPersonas=new ArrayList<Persona>();
 	private String url=new String();
 	private String url2=new String();
 	
