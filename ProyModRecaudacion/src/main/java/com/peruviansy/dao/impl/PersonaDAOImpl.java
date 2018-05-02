@@ -42,8 +42,8 @@ import com.peruviansy.model.Persona;
 @Stateless
 public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 	
-	//private EntityManagerFactory emf;
-	@PersistenceContext(unitName="PersonalPU")
+	private EntityManagerFactory emf;
+	//@PersistenceContext(unitName="PersonalPU")
 	private EntityManager em;
 	private List<Persona> lstPersonas;
 	private int cont;
@@ -51,38 +51,55 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 	
 
 	public PersonaDAOImpl() {
-		//emf=Persistence.createEntityManagerFactory("PersonalPU");
-		//em=emf.createEntityManager();
+		emf=Persistence.createEntityManagerFactory("PersonalPU");
+		em=emf.createEntityManager();
 		lstPersonas=new ArrayList<>();
 		cont=0;
 		
 	}
+	
+	/*@PostConstruct
+	public void init() {
+		emf=Persistence.createEntityManagerFactory("PersonalPU");
+		em=emf.createEntityManager();
+		lstPersonas=new ArrayList<>();
+		cont=0;
+	}*/
 	
 
 	public void registrar(Persona per,String url)  throws Exception{
 		// TODO Auto-generated method stub
 		System.out.println("[CDI]Se regisro : "+per.getNombre());
 		this.mostrarExcel(url);
+		System.out.println("bbbbbbbbbbbbbbbbbbbb");
 		try {
 			
 			for(Persona per3 :lstPersonas)
 			  {
-			//em.getTransaction().begin();
+				em.getTransaction().begin();
 	           if(cont==0) {
+	        	System.out.println("[CDI]aaaaaaaaaaaaaaaaaaaaaaaaa");
+	        	 
 			      em.persist(per3);//PARA INSERT.....MERGE ES PARA ACTUALIZAR
-			      //em.getTransaction().commit();
+	
+			      
 	           }else {
+	        
 				   em.merge(per3);
+				
 			    }
+	   		em.getTransaction().commit();
 	           cont++;
 		
 			 }
+	
+		
 			
 		}catch(PersistenceException e) {
-			/*if(em.getTransaction().isActive()) 
+			if(em.getTransaction().isActive()) 
 			{  
 				em.getTransaction().rollback();
-			}*/
+			}
 			System.out.println("PersonaDAOImpl aquiiiii");
 			System.out.println(e.getMessage()+"    "+e.getCause());
 			System.out.println(e.getLocalizedMessage());
@@ -92,6 +109,10 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 		}
 	}
 
+	public void registrar2(Persona per) {
+		
+	}
+	
 	public void modificar(Persona per) throws Exception {
 		// TODO Auto-generated method stub
 		em.merge(per);
@@ -125,10 +146,14 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 		//System.out.println(url2.substring(16,18));
 		//System.out.println(url2.substring(19,21));
 		//System.out.println(url2.substring(22,24));
-		
+		System.out.println("fffffffffffffffffffffffffffff");
 		File archivoExcel = new File("D:/carga/"+urll);
+		System.out.println("eeeeeeeeeee"+urll+"eeeeeeeeeeeeeeeeeee --- "+" -- "+urll);
 		//abrir el archivo con POI
+		try {
 		Workbook workbook = WorkbookFactory.create(archivoExcel);
+		System.out.println("oooooooooooooooooooooooooooa");
+		
 		//ubicarse en la hoja donde vas a procesar
 		//si es la primera hoja, debes indicar 0
 		HSSFSheet sheet = (HSSFSheet) workbook.getSheetAt(0);
@@ -243,6 +268,11 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 		  }	 
 		
 		   this.lstPersonas=lstPersonas1;
+		   System.out.println("yyyyyyyyyyyyyyyyyyyyyy");
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
+		}
 		}
 
 	

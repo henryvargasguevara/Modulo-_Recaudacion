@@ -192,6 +192,7 @@ public class PersonaBean implements Serializable{
 	      //System.out.println(file2.getAbsoluteFile()); 
 		  
 		  this.url=this.file.getFileName()  ;
+		  this.url2=this.url;
 		  //ServletContext servletContext=(ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext();
 		 // this.url2=servletContext.getRealPath("")+File.separator+"upload"+File.separator+this.url;
 		  FacesMessage msg=new FacesMessage("Succesful"+this.url+" is Uploaded");
@@ -286,6 +287,8 @@ public class PersonaBean implements Serializable{
 		
 		Persona per=new Persona();
 		per.setNombre("Henry Vargas");
+		System.out.println("wwwwwww"+this.url2);
+		
 		service.registrar(per,this.url2);
 		
 	    }catch(Exception e) 
