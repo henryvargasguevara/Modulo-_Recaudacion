@@ -65,7 +65,7 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 	public void init() {
 		emf=Persistence.createEntityManagerFactory("PersonalPU");
 		em=emf.createEntityManager();
-		lstPersonas=new ArrayList<>();
+		lstPersonas=new ArrayList<Persona>();
 		cont=0;
 	}*/
 	
