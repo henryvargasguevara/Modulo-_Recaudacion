@@ -161,18 +161,19 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 		Row row = (  sheet).getRow(filaNombresColumnas);
 		//paso 3.
 		//utilizando el poder de Java 8
-		row.cellIterator().forEachRemaining(cell -> {
-		    //paso 3.1.
-		    String valorCelda = cell.getStringCellValue().trim();
-		    
-		    //Persona per=new Persona();
-		    //per.setMoneda(cell.getStringCellValue().trim());
-		    //per.setDependencia(cell.getStringCellValue().trim());
-		    if (!valorCelda.isEmpty()) 
-		    {
-		        mapNombresColumnas.put(valorCelda, cell.getColumnIndex());
-		    }
-		});
+		 Iterator<Cell> cellIterator = row.cellIterator();
+	  
+		while ( cellIterator.hasNext()) {	
+			HSSFCell cell = (HSSFCell) cellIterator.next();
+			  String valorCelda = cell.getStringCellValue().trim();
+			   System.out.println(valorCelda);
+			   System.out.println(cell.getColumnIndex());
+			   if (!valorCelda.isEmpty()) 
+			    {
+			        mapNombresColumnas.put(valorCelda, cell.getColumnIndex());
+			    }
+		
+		}
 		//paso 4.
 		//se asume que los valores para procesar se encuentran en la fila
 		//siguiente a la fila donde están los nombres de las columnas
