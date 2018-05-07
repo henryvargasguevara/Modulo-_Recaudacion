@@ -123,7 +123,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
          		       <configuration>
                                <failOnMissingWebXml>false</failOnMissingWebXml>
                                <outputDirectory>target/wildfly-10.1.0.Final/standalone/deployments</outputDirectory>
-                               <warName>hktest</warName>
+                               <warName>ProyCurso</warName>
             </configuration>
         </plugin>   
 
