@@ -103,11 +103,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>com.github.jsimone</groupId>
-									<artifactId>webapp-runner</artifactId>
-									<version>8.0.30.2</version>
-									<destFileName>webapp-runner.jar</destFileName>
-									
+									<groupId>org.wildfly</groupId>
+                               					        <artifactId>wildfly-dist</artifactId>
+                             						  <version>1.2.1.Final</version>
+                            						 <type>zip</type>
+                             						 <overWrite>false</overWrite>
+                             						 <outputDirectory>target</outputDirectory>
 								</artifactItem>
 							</artifactItems>
 						</configuration>
