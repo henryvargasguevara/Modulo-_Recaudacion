@@ -89,7 +89,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				 <version>2.3</version>
+				 <version>3.1</version>
                             <configuration>
               	                <jdkVersion>1.8</jdkVersion>
                   		  <encoding>ISO-8859-1</encoding>
@@ -105,7 +105,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 								<artifactItem>
 									<groupId>org.wildfly</groupId>
                                					        <artifactId>wildfly-dist</artifactId>
-                             						  <version>1.2.1.Final</version>
+                             						  <version>10.1.0.Final</version>
                             						 <type>zip</type>
                              						 <overWrite>false</overWrite>
                              						 <outputDirectory>target</outputDirectory>
@@ -129,8 +129,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 
 		</plugins>
 	</build>
-  
-  
+    
   
   
 </project>
