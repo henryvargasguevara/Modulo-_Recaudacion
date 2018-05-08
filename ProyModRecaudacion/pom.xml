@@ -96,9 +96,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                			 </configuration>
 				<executions>
 					<execution>
+						 <id>unpack</id>
 						<phase>package</phase>
 						<goals>
-							<goal>copy</goal>
+							  <goal>unpack</goal>
 						</goals>
 						<configuration>
 							<artifactItems>
