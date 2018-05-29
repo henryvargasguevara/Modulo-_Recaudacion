@@ -39,7 +39,7 @@ public class PersonaBean implements Serializable{
 	private List<Persona> lstPersonas=new ArrayList<Persona>();
 	private String url=new String();
 	private String url2=new String();
-	
+	private List<Persona> lstReporte=new ArrayList<Persona>();
 	private String nombre;
 	private String apellido;
 	private double monto;
@@ -60,7 +60,8 @@ public class PersonaBean implements Serializable{
 	
 	@PostConstruct
 	public void init() 
-	{     nombre=new String();
+	{     this.lstReporte.clear();
+	      nombre=new String();
 	      this.apellido=new String();
 	    	this.listar();
 	}
@@ -126,6 +127,14 @@ public class PersonaBean implements Serializable{
 	public void setNro(int nro) {
 		this.nro = nro;
 	}
+	
+	public List<Persona> getLstReporte() {
+		return lstReporte;
+	}
+
+	public void setLstReporte(List<Persona> lstReporte) {
+		this.lstReporte = lstReporte;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -183,6 +192,16 @@ public class PersonaBean implements Serializable{
 	        }
 	        this.url=file.getFileName();
 	    }
+	
+	 public void convertirMayusculas()
+	  {   this.apellido=this.apellido.toUpperCase();
+		  
+	  }
+	  
+	  public void convertirNombreMayusculas() {
+			// TODO Auto-generated method stub
+		  this.nombre=this.nombre.toUpperCase();
+		}
 	  
 	  public void myFileUpload() throws IOException {
 		 
