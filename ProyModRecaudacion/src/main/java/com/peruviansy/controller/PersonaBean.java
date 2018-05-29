@@ -321,29 +321,42 @@ public class PersonaBean implements Serializable{
 		try {
 		  this.monto=0;
 		  Persona per=new Persona();
-	     
-		  per.setNombre(this.nombre);
+		  System.out.println("******fechainicio*"+fechainicio);
+		  if(!this.apellido.equalsIgnoreCase("") && apellido!=null)
+	        this.convertirMayusculas();
+		  if(!this.nombre.equalsIgnoreCase("") && nombre!=null)
+		        this.convertirNombreMayusculas();
+		  
+	      per.setNombre(this.nombre);
 		  per.setDependencia(this.apellido);
-		  
+		  System.out.println("******fechainicio*"+fechainicio);
 		  Calendar cal= Calendar.getInstance();
-		  cal.setTime(fechainicio);
-		  fechainicio1=LocalDate.of(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH)+1,cal.get(Calendar.DAY_OF_MONTH));
-		  
-		  Calendar cal1=Calendar.getInstance(); 
-		  cal1.setTime(fechafinal);
-		  fechafinal1=LocalDate.of(cal1.get(Calendar.YEAR),cal1.get(Calendar.MONTH)+1,cal1.get(Calendar.DAY_OF_MONTH));
-		  
-		  //List<Persona> lst=new ArrayList<>();
-		  //this.lstPersonas=lst;
-		  this.lstPersonas= service.listarxPersona(per,fechainicio1,this.fechafinal1);
-		  for(Persona p : lstPersonas) {
-			  monto=monto+p.getImporte();
+		  if(fechainicio!=null) 
+		  {
+		     cal.setTime(fechainicio);
+		     fechainicio1=LocalDate.of(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH)+1,cal.get(Calendar.DAY_OF_MONTH));
 		  }
-		  this.nro=lstPersonas.size();
+		  else {
+			  fechainicio1=null;
+		  }
+		  Calendar cal1=Calendar.getInstance(); 
 		  
-		  System.out.println(cal1.get(Calendar.MONTH)+"****"+cal.get(Calendar.MONTH));
-		}catch(Exception e) {
+		  if(fechafinal!=null)
+		  {
+			  cal1.setTime(fechafinal);
+			  fechafinal1=LocalDate.of(cal1.get(Calendar.YEAR),cal1.get(Calendar.MONTH)+1,cal1.get(Calendar.DAY_OF_MONTH));
+		  }
+		  else 
+		  {
+			  fechafinal1=null;
+		  }
+		  List<Persona> lst=new ArrayList<Persona>();
+		  this.lstReporte=lst;
+		  this.lstReporte= service.listarxPersona(per,fechainicio1,this.fechafinal1);
+	  
+		}catch(Exception e) 
+		  {
 			System.out.println(e.getMessage());
-		}
+		  }
 	}
 }
