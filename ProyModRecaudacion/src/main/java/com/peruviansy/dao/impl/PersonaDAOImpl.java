@@ -70,18 +70,18 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 	}*/
 	
 
-	public void registrar(Persona per,String url)  throws Exception{
+	public void registrar(String extension,String url)  throws Exception{
 		// TODO Auto-generated method stub
 		System.out.println("[CDI]Se regisro : "+per.getNombre());
 		this.mostrarExcel(url);
-		//System.out.println("bbbbbbbbbbbbbbbbbbbb");
+	
 		try {
 			
 			for(Persona per3 :lstPersonas)
 			  {
 				em.getTransaction().begin();
 	           if(cont==0) {
-	        	//System.out.println("[CDI]aaaaaaaaaaaaaaaaaaaaaaaaa");
+	        	
 	        	 
 			      em.persist(per3);//PARA INSERT.....MERGE ES PARA ACTUALIZAR
 	
@@ -130,7 +130,7 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 		return lista;
 	}
 	
-	public void mostrarExcel(String urll) throws IOException, EncryptedDocumentException, InvalidFormatException {
+	public void mostrarExcel(String extension,String urll) throws IOException, EncryptedDocumentException, InvalidFormatException {
 		Date fechaSeleccionada;
 		//paso 0. Definir una colección con nombres de las columnas a procesar
 		//considera que esto lo puedes leer de un archivo de configuración,
@@ -158,24 +158,17 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 		String[] parts = string.split("-");
 		//System.out.println("antesss..."+parts.length);
 		//System.out.println( parts[2]+"***"+parts[2].substring(3, 5));
-	
-	    //System.out.println(parts.length);
-		//String part1 = parts[1]; // 123
-		//System.out.println(parts[2].length());
-		if(parts[2].length()<7)
-		extension =parts[2].substring(3, 6); // 654321
-		else
-			extension=parts[2].substring(3,7);
 		
-		//System.out.println("aaa..."+extension+"/////"+parts[2].substring(3, 5));
-	
+		
+		
+	  
 		try 
 		{
 			
 		//Workbook workbook = WorkbookFactory.create(archivoExcel);	
 		FileInputStream fis = new FileInputStream(archivoExcel);
 	    
-		if(extension.equalsIgnoreCase("xls")) 
+		if(extension.equalsIgnoreCase("application/vnd.ms-excel")) 
 		{
 		  System.out.println("***"+extension);
 	      HSSFWorkbook workbook = new HSSFWorkbook(fis);
@@ -284,9 +277,14 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 			   pers.setNombre(filaDatos.getCell(mapNombresColumnas.get("NOMBRE"))+"");
 			   pers.setImporte(  Double.parseDouble((filaDatos.getCell(mapNombresColumnas.get("IMPORTE")).toString())));
 			   String fechaa=urll;
+				 String anio=filaDatos.getCell(mapNombresColumnas.get("FECHA")).toString();
+			   System.out.println(anio.length()+"****"+anio);
+			   //HAY QUE VALIDAR FECHA
+			   ff=LocalDate.of(Integer.parseInt((String) (anio.subSequence(0, 1)+""+anio.subSequence(2,5))),Integer.parseInt((String) anio.subSequence(5,7)), Integer.parseInt((String) anio.subSequence(7, 9)));
+               //ff=LocalDate.of(Integer.parseInt("20"+fechaa.substring(22,24)),Integer.parseInt(fechaa.substring(19,21)),Integer.parseInt((fechaa.substring(16,18))));		
+			
 			   
-               ff=LocalDate.of(Integer.parseInt("20"+fechaa.substring(22,24)),Integer.parseInt(fechaa.substring(19,21)),Integer.parseInt((fechaa.substring(16,18))));
-			  
+             
 			   pers.setFecha(ff);
 		       //System.out.println(pers.getId()+"AAA/"+pers.getMoneda()+"/"+pers.getDependencia()+"/"+pers.getConcepto()+"/"+pers.getNumero()+
 		       //   "/"+pers.getCodigo()+"/"+pers.getNombre());	    
@@ -404,10 +402,12 @@ public class PersonaDAOImpl implements IPersonaDAO,Serializable {
 				   pers.setNombre(filaDatos.getCell(mapNombresColumnas.get("NOMBRE"))+"");
 				   pers.setImporte(  Double.parseDouble((filaDatos.getCell(mapNombresColumnas.get("IMPORTE")).toString())));
 				   String fechaa=urll;
-				   
-	               ff=LocalDate.of(Integer.parseInt("20"+fechaa.substring(22,24)),Integer.parseInt(fechaa.substring(19,21)),Integer.parseInt((fechaa.substring(16,18))));
-				  
-				   pers.setFecha(ff);
+			String anio=filaDatos.getCell(mapNombresColumnas.get("FECHA")).toString();
+			   System.out.println(anio.length()+"****"+anio);
+			   //HAY QUE VALIDAR FECHA
+			   ff=LocalDate.of(Integer.parseInt((String) (anio.subSequence(0, 1)+""+anio.subSequence(2,5))),Integer.parseInt((String) anio.subSequence(5,7)), Integer.parseInt((String) anio.subSequence(7, 9)));
+               //ff=LocalDate.of(Integer.parseInt("20"+fechaa.substring(22,24)),Integer.parseInt(fechaa.substring(19,21)),Integer.parseInt((fechaa.substring(16,18))));		
+			   pers.setFecha(ff);
 			       //System.out.println(pers.getId()+"AAA/"+pers.getMoneda()+"/"+pers.getDependencia()+"/"+pers.getConcepto()+"/"+pers.getNumero()+
 			       //   "/"+pers.getCodigo()+"/"+pers.getNombre());	    
 				   lstPersonas1.add(pers);
