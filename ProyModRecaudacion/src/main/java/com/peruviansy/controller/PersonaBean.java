@@ -39,6 +39,7 @@ public class PersonaBean implements Serializable{
 	private List<Persona> lstPersonas=new ArrayList<Persona>();
 	private String url=new String();
 	private String url2=new String();
+	private String extension;
 	private List<Persona> lstReporte=new ArrayList<Persona>();
 	private String nombre;
 	private String apellido;
@@ -204,20 +205,30 @@ public class PersonaBean implements Serializable{
 		}
 	  
 	  public void myFileUpload() throws IOException {
-		 
-		  File file2 = new File(file.getFileName());  
-	      // System.out.println(file2.getCanonicalPath()); 
-	      //System.out.println(file2.getPath()); 
-	      //System.out.println(file2.getAbsoluteFile()); 
+		File file2 = new File(file.getFileName());  
+		  InputStream content=file.getInputstream();
+		  OutputStream out=new FileOutputStream(file.getFileName());
+		  this.extension=file.getContentType();
+		  
+          byte[] cont=Utils.toByteArray(content);
+          out.write(cont);
+          out.close();
+          content.close();
 		  
 		  this.url=this.file.getFileName()  ;
 		  this.url2=this.url;
-		  //ServletContext servletContext=(ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext();
-		 // this.url2=servletContext.getRealPath("")+File.separator+"upload"+File.separator+this.url;
-		  FacesMessage msg=new FacesMessage("Succesful"+this.url+" is Uploaded");
-		  FacesContext.getCurrentInstance().addMessage(null,msg);
-		  //System.out.println(this.url2);
+		
 		  registrar();
+		  File fichero = new File(file.getFileName());
+
+			  if (fichero.delete())
+		        System.out.println("El fichero ha sido borrado satisfactoriamente"+file.getFileName());
+			  else
+		        System.out.println("El fichero no pudó ser borrado"+file.getFileName());
+			  
+		  
+		  FacesMessage msg=new FacesMessage("Archivo cargado :"+this.url);
+		  FacesContext.getCurrentInstance().addMessage(null,msg);
 		  
 	  }
 	  
